@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {
@@ -10,16 +10,21 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useState } from "react";
 import emailjs from "emailjs-com";
 
+// Main component for the home page
 export default function HomePage() {
-  // State to store form values
+  // State to hold form data
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  // Initialize AOS animations
+  useEffect(() => {
+    AOS.init({ once: true });
+  }, []);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -33,14 +38,13 @@ export default function HomePage() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Use EmailJS to send the email
+
     emailjs
       .sendForm(
-        "YOUR_SERVICE_ID",  // Replace with your service ID
-        "YOUR_TEMPLATE_ID",  // Replace with your template ID
-        e.target,            // Form reference
-        "YOUR_USER_ID"       // Replace with your user ID
+        "your_service_id", // Replace with your service ID from emailjs
+        "your_template_id", // Replace with your template ID from emailjs
+        e.target,           // Form reference
+        "your_user_id"      // Replace with your user ID from emailjs
       )
       .then(
         (result) => {
@@ -52,7 +56,7 @@ export default function HomePage() {
           console.log(error.text);
         }
       );
-    
+
     // Clear form after submission
     setFormData({
       name: "",
@@ -60,14 +64,6 @@ export default function HomePage() {
       message: "",
     });
   };
-
-  return (
-    <div className="bg-black text-gray-100 font-sans">
-
-export default function HomePage() {
-  useEffect(() => {
-    AOS.init({ once: true });
-  }, []);
 
   return (
     <div className="bg-black text-gray-100 font-sans">
@@ -142,6 +138,7 @@ export default function HomePage() {
           </a>
         </div>
       </main>
+
       {/* About Section */}
       <section
         id="about"
@@ -164,14 +161,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Services Section */}
       <section
         id="services"
         className="relative py-20 px-8 bg-black text-white z-10"
       >
         <div className="max-w-5xl mx-auto text-center" data-aos="fade-up">
-          <h3 className="text-3xl font-bold text-blue-500 mb-6">
-            Our Services
-          </h3>
+          <h3 className="text-3xl font-bold text-blue-500 mb-6">Our Services</h3>
           <p className="text-lg text-gray-300 mb-10 max-w-3xl mx-auto">
             From AI consulting to full-scale deployment, we offer end-to-end
             services to turn your data into actionable intelligence.
@@ -272,17 +268,15 @@ export default function HomePage() {
               />
               <div>
                 <p className="text-lg text-gray-300 mb-2">
-                  "The team at Effective AI Solutions delivered tailored AI
+                 "The team at Effective AI Solutions delivered tailored AI
                   tools that perfectly fit our business needs, enabling us to
                   make data-driven decisions."
                 </p>
                 <p className="font-semibold text-blue-500">John Smith</p>
-                <p className="text-sm text-gray-400">COO, DataSmart</p>
+                <p className="text-sm text-gray-400">COO, DigitalAgency</p>
               </div>
             </div>
           </div>
-
-          {/* Testimonial 3 */}
           <div
             className="bg-gray-800 p-10 rounded-xl shadow-lg  duration-300 ease-in-out transform hover:scale-105  hover:shadow-2xl hover:bg-gray-700 border-2 border-gray-600"
             data-aos="fade-up"
@@ -306,7 +300,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Impact Section */}
+       {/* Impact Section */}
       <section
         id="impact"
         className="bg-black py-20 px-8 text-white text-center z-10"
@@ -414,74 +408,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contact CTA */}
-       <section
-        id="contact"
-        className="min-h-screen flex flex-col justify-center items-center bg-black text-white z-10"
-        data-aos="fade-up"
-      >
-        <h2 className="text-3xl font-bold text-blue-500 mb-6">Get in Touch</h2>
-        <p className="text-lg mb-8 max-w-2xl text-center mx-auto">
-          Have any questions or ready to take the next step? We’d love to hear
-          from you and discuss how we can help elevate your business with AI.
-          Fill out the form below, and a member of our team will get back to you
-          as soon as possible.
-        </p>
-        <form
-          className="max-w-xl mx-auto space-y-6 text-left w-full"
-          data-aos="fade-up"
-          data-aos-delay="100"
-          onSubmit={handleSubmit} // Attach the form submission handler
-        >
-          <div>
-            <label className="block text-white mb-1">Name</label>
+      {/* Contact Form */}
+      <section id="contact" className="bg-black py-20 px-8 text-white">
+        <div className="max-w-5xl mx-auto text-center" data-aos="fade-up">
+          <h3 className="text-3xl font-bold text-blue-500 mb-6">Get in Touch</h3>
+          <form
+            onSubmit={handleSubmit}
+            className="bg-gray-800 p-8 rounded-lg shadow-xl border-2 border-gray-600 mx-auto"
+          >
             <input
               type="text"
-              placeholder="Your name"
-              name="name" // This should match the form field's name in the state
-              value={formData.name} // Bind input value to state
-              onChange={handleInputChange} // Handle input changes
-              className="w-full p-3 rounded-lg bg-white text-black"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              placeholder="Your Name"
+              required
+              className="w-full mb-4 px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-          </div>
-          <div>
-            <label className="block text-white mb-1">Email</label>
             <input
               type="email"
-              placeholder="you@example.com"
-              name="email" // This should match the form field's name in the state
-              value={formData.email} // Bind input value to state
-              onChange={handleInputChange} // Handle input changes
-              className="w-full p-3 rounded-lg bg-white text-black"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Your Email"
+              required
+              className="w-full mb-4 px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-          </div>
-          <div>
-            <label className="block text-white mb-1">Message</label>
             <textarea
-              rows={4}
-              placeholder="How can we help you?"
-              name="message" // This should match the form field's name in the state
-              value={formData.message} // Bind input value to state
-              onChange={handleInputChange} // Handle input changes
-              className="w-full p-3 rounded-lg bg-white text-black"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="w-full py-3 bg-white text-blue-700 font-bold rounded-full hover:bg-blue-100 transition duration-300 shadow-lg hover:scale-105"
-          >
-            Send Message
-          </button>
-        </form>
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              placeholder="Your Message"
+              required
+              className="w-full mb-6 px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button
+              type="submit"
+              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
       </section>
-
-      {/* Footer */}
-      <footer className="text-center py-6 bg-black text-white z-10">
-        <p>
-          &copy; {new Date().getFullYear()} Effective AI Solutions. All rights
-          reserved.
-        </p>
-      </footer>
     </div>
   );
 }
