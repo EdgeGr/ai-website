@@ -10,6 +10,59 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useState } from "react";
+import emailjs from "emailjs-com";
+
+export default function HomePage() {
+  // State to store form values
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Use EmailJS to send the email
+    emailjs
+      .sendForm(
+        "YOUR_SERVICE_ID",  // Replace with your service ID
+        "YOUR_TEMPLATE_ID",  // Replace with your template ID
+        e.target,            // Form reference
+        "YOUR_USER_ID"       // Replace with your user ID
+      )
+      .then(
+        (result) => {
+          alert("Message sent successfully!");
+          console.log(result.text);
+        },
+        (error) => {
+          alert("Error: Message not sent.");
+          console.log(error.text);
+        }
+      );
+    
+    // Clear form after submission
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
+  };
+
+  return (
+    <div className="bg-black text-gray-100 font-sans">
 
 export default function HomePage() {
   useEffect(() => {
