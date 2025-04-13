@@ -415,7 +415,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact CTA */}
-      <section
+       <section
         id="contact"
         className="min-h-screen flex flex-col justify-center items-center bg-black text-white z-10"
         data-aos="fade-up"
@@ -431,12 +431,16 @@ export default function HomePage() {
           className="max-w-xl mx-auto space-y-6 text-left w-full"
           data-aos="fade-up"
           data-aos-delay="100"
+          onSubmit={handleSubmit} // Attach the form submission handler
         >
           <div>
             <label className="block text-white mb-1">Name</label>
             <input
               type="text"
               placeholder="Your name"
+              name="name" // This should match the form field's name in the state
+              value={formData.name} // Bind input value to state
+              onChange={handleInputChange} // Handle input changes
               className="w-full p-3 rounded-lg bg-white text-black"
             />
           </div>
@@ -445,6 +449,9 @@ export default function HomePage() {
             <input
               type="email"
               placeholder="you@example.com"
+              name="email" // This should match the form field's name in the state
+              value={formData.email} // Bind input value to state
+              onChange={handleInputChange} // Handle input changes
               className="w-full p-3 rounded-lg bg-white text-black"
             />
           </div>
@@ -453,6 +460,9 @@ export default function HomePage() {
             <textarea
               rows={4}
               placeholder="How can we help you?"
+              name="message" // This should match the form field's name in the state
+              value={formData.message} // Bind input value to state
+              onChange={handleInputChange} // Handle input changes
               className="w-full p-3 rounded-lg bg-white text-black"
             ></textarea>
           </div>
